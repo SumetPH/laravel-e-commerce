@@ -19,34 +19,38 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Create Product</h5>
+                    <h5 class="card-title">Edit Product</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('product.update', ['id' => $product->id]) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <div class="form-group">
                             <label>title</label>
-                            <input class="form-control" name="title" type="text">
+                            <input class="form-control" name="title" type="text" value="{{ $product->title }}">
                         </div>
                         <div class="form-group">
                             <label>author</label>
-                            <input class="form-control" name="author" type="text">
+                            <input class="form-control" name="author" type="text" value="{{ $product->author }}">
                         </div>
                         <div class="form-group">
                             <label>publisher</label>
-                            <input class="form-control" name="publisher" type="text">
+                            <input class="form-control" name="publisher" type="text" value="{{ $product->publisher }}">
                         </div>
                         <div class="form-group">
                             <label>category</label>
                             <select class="form-control" name="category">
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->category }}">{{ $category->category }}</option>
+                                <option value="{{ $category->category }}"
+                                    selected="{{ $category->category == $product->category ? 'selected' : null }}">
+                                    {{ $category->category }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label>price</label>
-                            <input class="form-control" name="price" type="number">
+                            <input class="form-control" name="price" type="number" value="{{ $product->price }}">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success" id="imageBtn">Image</button>
@@ -56,9 +60,9 @@
                         </div>
                         <div class="form-group">
                             <label>description</label>
-                            <textarea class="form-control" name="description"></textarea>
+                            <textarea class="form-control" name="description">{{ $product->description }}</textarea>
                         </div>
-                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-primary" type="submit">Update</button>
                     </form>
                 </div>
             </div>

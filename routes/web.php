@@ -16,7 +16,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 
 // Web
-Route::get('/product/{id}', 'Web\ProductController@show');
+Route::get('/product/{id}', 'Web\ProductController@show')->name('web.product.show');
 
 // User
 Route::group(['middleware' => ['auth']], function () {
@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 // Admin
 Route::group(['middleware' => ['admin']], function () {
-    Route::get('/admin/dashboard', 'Admin\AdminController@index');
+    Route::get('/admin/dashboard', 'Admin\AdminController@index')->name('admin.dashboard');
     Route::resource('/admin/product', 'Admin\ProductController');
+    Route::resource('/admin/category', 'Admin\CategoryController');
 });

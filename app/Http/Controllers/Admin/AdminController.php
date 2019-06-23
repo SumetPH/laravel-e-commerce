@@ -8,6 +8,7 @@ class AdminController extends Controller
 {
     public function index()
     {
+        session()->put('admin-page', 'dashboard');
         return view('admin/dashboard');
     }
 }

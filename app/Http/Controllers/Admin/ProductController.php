@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Http\Request;
 use Storage;
 
 class ProductController extends Controller
@@ -16,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        session()->put('admin-page', 'product');
+        $products = Product::all();
+        return view('admin.product.index')->with('products', $products);
     }
 
     /**
@@ -26,7 +29,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product.create');
+        $categories = Category::all();
+        return view('admin.product.create')->with('categories', $categories);
     }
 
     /**
@@ -74,7 +78,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        $categories = Category::all();
+        $data = [
+            'product' => $product,
+            'categories' => $categories,
+        ];
+        return view('admin.product.edit')->with($data);
     }
 
     /**
@@ -86,7 +96,30 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo 'put';
+        $product = Product::find($id);
+        if ($request->hasFile('image')) {
+            Storage::delete($product->image);
+            $image = Storage::putFile('image', $request->file('image'));
+            $product->image = $image;
+            $product->save();
+        }
+        if ($request->hasFile('file')) {
+            Storage::delete($product->file);
+            $file = Storage::putFile('file', $request->file('file'));
+            $product->file = $file;
+            $product->save();
+        }
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->author = $request->author;
+        $product->publisher = $request->publisher;
+        $product->category = $request->category;
+        $product->price = $request->price;
+        if ($product->save()) {
+            return redirect()->back()->with('success', 'Updated');
+        } else {
+            return redirect()->back()->with('failure', 'Error');
+        }
     }
 
     /**
@@ -97,6 +130,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if ($product->delete()) {
+            Storage::delete($product->image);
+            Storage::delete($product->file);
+            return redirect()->back()->with('success', 'Deleted');
+        } else {
+            return redirect()->back()->with('failure', 'Error');
+        }
     }
 }
