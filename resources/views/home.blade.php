@@ -105,7 +105,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                        <div class="red_button add_to_cart_button">
+                            <a href=""
+                                onclick="event.preventDefault(); document.getElementById('add-cart-form-{{ $product->id }}').submit();">add
+                                to cart</a>
+                            <form id="add-cart-form-{{ $product->id }}" action="{{ route('cart.store') }}"
+                                method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="title" value="{{ $product->title }}">
+                                <input type="hidden" name="image" value="{{ $product->image }}">
+                                <input type="hidden" name="price" value="{{ $product->price }}">
+                                <input type="hidden" name="quantity" value="1">
+                            </form>
+                        </div>
                     </div>
                     @endforeach
 

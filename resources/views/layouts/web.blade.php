@@ -16,9 +16,7 @@
 </head>
 
 <body>
-
     <div class="super_container">
-
         <!-- Header -->
 
         <header class="header trans_300">
@@ -38,17 +36,17 @@
                                     <!-- Currency / Language / My Account -->
 
                                     {{-- <li class="currency">
-									<a href="#">
-										usd
-										<i class="fa fa-angle-down"></i>
-									</a>
-									<ul class="currency_selection">
-										<li><a href="#">cad</a></li>
-										<li><a href="#">aud</a></li>
-										<li><a href="#">eur</a></li>
-										<li><a href="#">gbp</a></li>
-									</ul>
-								</li> --}}
+                                        <a href="#">
+                                            usd
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        <ul class="currency_selection">
+                                            <li><a href="#">cad</a></li>
+                                            <li><a href="#">aud</a></li>
+                                            <li><a href="#">eur</a></li>
+                                            <li><a href="#">gbp</a></li>
+                                        </ul>
+                                    </li> --}}
                                     {{-- <li class="language">
 									<a href="#">
 										English
@@ -139,13 +137,16 @@
                                 </ul>
                                 <ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                    <li>
+                                    {{-- <li>
                                         <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
-                                    </li>
+                                    </li> --}}
                                     <li class="checkout">
-                                        <a href="#">
+                                        <a href="{{ route('cart.index') }}">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
+                                            @if (session()->get('cart'))
+                                            <span id="checkout_items"
+                                                class="checkout_items">{{ session()->get('cart') }}</span>
+                                            @endif
                                         </a>
                                     </li>
                                 </ul>

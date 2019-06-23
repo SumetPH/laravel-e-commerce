@@ -13,14 +13,17 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->middleware(['cart.check']);
 
 // Web
-Route::get('/product/{id}', 'Web\ProductController@show')->name('web.product.show');
+Route::group(['middleware' => ['cart.check']], function () {
+    Route::get('/product/{id}', 'Web\ProductController@show')->name('web.product.show');
+});
 
 // User
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'cart.check']], function () {
     Route::get('/user/dashboard', 'User\UserController@index')->name('user.dashboard');
+    Route::resource('/user/cart', 'User\CartController');
 });
 
 // Admin
