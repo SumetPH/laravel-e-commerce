@@ -20,7 +20,7 @@ Route::get('/product/{id}', 'Web\ProductController@show')->name('web.product.sho
 
 // User
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/user/dashboard', 'User\UserController@index');
+    Route::get('/user/dashboard', 'User\UserController@index')->name('user.dashboard');
 });
 
 // Admin
