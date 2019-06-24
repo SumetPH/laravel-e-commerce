@@ -67,9 +67,11 @@
                             <p>Order</p>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left: 2rem">
-                            <a class="dropdown-item" href="{{ route('admin.order.payment_not_completed') }}">Payment
+                            <a class="dropdown-item"
+                                href="{{ route('admin.order.index', ['payment_completed' => 0]) }}">Payment
                                 not completed.</a>
-                            <a class="dropdown-item" href="{{ route('admin.order.payment_completed') }}">Payment
+                            <a class="dropdown-item"
+                                href="{{ route('admin.order.index', ['payment_completed' => 1]) }}">Payment
                                 completed.</a>
                         </div>
                     </li>

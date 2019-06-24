@@ -3,49 +3,90 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\OrderBill;
 use App\PurchaseBill;
 use App\PurchaseProduct;
 
 class OrderController extends Controller
 {
-    public function payment_not_completed()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         session()->put('admin-page', 'order');
-        $orders = OrderBill::where('payment_completed', 0)->get();
-        return view('admin.order.payment_not_completed')->with('orders', $orders);
+        $payment_completed = Input::get('payment_completed', 0);
+        $orders = OrderBill::where('payment_completed', $payment_completed)->get();
+        return view('admin.order.index')->with('orders', $orders);
     }
 
-    public function payment_completed()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        session()->put('admin-page', 'order');
-        $orders = OrderBill::where('payment_completed', 1)->get();
-        return view('admin.order.payment_completed')->with('orders', $orders);
+        //
     }
 
-    public function payment_confirm($id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $order = OrderBill::find($id);
-        $purchase_bill = new PurchaseBill;
-        $purchase_bill->user_id = $order->user_id;
-        $purchase_bill->total = $order->total;
-        $purchase_bill->save();
+        //
+    }
 
-        foreach ($order->products as $product) {
-            $purchase_product = new PurchaseProduct;
-            $purchase_product->purchase_bill_id = $purchase_bill->id;
-            $purchase_product->product_id = $product->product_id;
-            $purchase_product->image = $product->image;
-            $purchase_product->title = $product->title;
-            $purchase_product->price = $product->price;
-            $purchase_product->quantity = $product->quantity;
-            $purchase_product->total = $product->total;
-            if ($purchase_product->save()) {
-                $product->delete();
-            }
-        }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-        $order->delete();
-        return redirect()->route('admin.order.payment_completed');
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

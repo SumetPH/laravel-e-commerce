@@ -73,7 +73,7 @@
                             <p>Buyer : {{ $order->user->name }}</p>
                             <p>Date : {{ $order->created_at }}</p>
                             <a class="btn btn-success btn-sm"
-                                href="{{ route('admin.order.payment_confirm', ['id' => $order->id]) }}">Confirm</a>
+                                href="{{ route('admin.payment_confirm', ['id' => $order->id]) }}">Confirm</a>
                         </div>
                     </div>
                 </div>

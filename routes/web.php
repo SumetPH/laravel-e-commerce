@@ -27,6 +27,7 @@ Route::group(['middleware' => ['cart.check']], function () {
 Route::group(['middleware' => ['auth', 'cart.check']], function () {
     Route::get('/user/dashboard', 'User\UserController@index')
         ->name('user.dashboard');
+
     Route::resource('/user/cart', 'User\CartController', ['as' => 'user']);
     Route::resource('/user/order', 'User\OrderController', ['as' => 'user']);
 });
@@ -35,12 +36,10 @@ Route::group(['middleware' => ['auth', 'cart.check']], function () {
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin/dashboard', 'Admin\AdminController@index')
         ->name('admin.dashboard');
-    Route::get('/admin/order/payment_not_completed', 'Admin\OrderController@payment_not_completed')
-        ->name('admin.order.payment_not_completed');
-    Route::get('/admin/order/payment_completed', 'Admin\OrderController@payment_completed')
-        ->name('admin.order.payment_completed');
-    Route::get('/admin/order/{id}', 'Admin\OrderController@payment_confirm')
-        ->name('admin.order.payment_confirm');
+    Route::get('/admin/payment_confirm/{id}', 'Admin\AdminController@payment_confirm')
+        ->name('admin.payment_confirm');
+
     Route::resource('/admin/product', 'Admin\ProductController', ['as' => 'admin']);
     Route::resource('/admin/category', 'Admin\CategoryController', ['as' => 'admin']);
+    Route::resource('/admin/order', 'Admin\OrderController', ['as' => 'admin']);
 });
