@@ -60,11 +60,18 @@
                             <p>Category</p>
                         </a>
                     </li>
-                    <li class="{{ session()->get('admin-page') == 'order' ? 'active' : null }}">
-                        <a href="{{ route('admin.order.index') }}">
+                    <li class="{{ session()->get('admin-page') == 'order' ? 'active' : null }} dropdown">
+                        <a href="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
                             <i class="nc-icon nc-bell-55"></i>
                             <p>Order</p>
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left: 2rem">
+                            <a class="dropdown-item" href="{{ route('admin.order.payment_not_completed') }}">Payment
+                                not completed.</a>
+                            <a class="dropdown-item" href="{{ route('admin.order.payment_completed') }}">Payment
+                                completed.</a>
+                        </div>
                     </li>
                     <li>
                         <a href="./user.html">

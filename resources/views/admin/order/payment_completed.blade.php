@@ -20,7 +20,7 @@
             @foreach ($orders as $order)
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Order #{{ $order['bill']->id }}</h4>
+                    <h4 class="card-title">Order #{{ $order->id }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -45,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($order['products'] as $product)
+                                @foreach ($order->products as $product)
                                 <tr>
                                     <td>
                                         <img class="img-fluid" width="150px" src="/upload/{{ $product->image }}" alt="">
@@ -69,10 +69,11 @@
                             </tbody>
                         </table>
                         <div>
-                            <p>Total : {{ $order['bill']->total }}</p>
-                            <p>Buyer : {{ $order['bill']->name }}</p>
-                            <p>Date : {{ $order['bill']->created_at }}</p>
-                            <button class="btn btn-success btn-sm">Confirm</button>
+                            <p>Total : {{ $order->total }}</p>
+                            <p>Buyer : {{ $order->user->name }}</p>
+                            <p>Date : {{ $order->created_at }}</p>
+                            <a class="btn btn-success btn-sm"
+                                href="{{ route('admin.order.payment_confirm', ['id' => $order->id]) }}">Confirm</a>
                         </div>
                     </div>
                 </div>
