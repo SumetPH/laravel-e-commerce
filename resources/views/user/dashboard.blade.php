@@ -1,7 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.web')
+
+@section('link')
+<link rel="stylesheet" type="text/css" href="/assets/frontEnd/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="/assets/frontEnd/styles/responsive.css">
+@endsection
 
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 200px">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
