@@ -22,7 +22,7 @@
                     <h5 class="card-title">Edit Category</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('category.update', ['id' => $category->id]) }}" method="post"
+                    <form action="{{ route('admin.category.update', ['id' => $category->id]) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         @method('put')

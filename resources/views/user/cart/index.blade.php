@@ -56,7 +56,7 @@
                             {{ $cart->total }}
                         </th>
                         <th>
-                            <form action="{{ route('cart.destroy', ['id' => $cart->id]) }}" method="post">
+                            <form action="{{ route('user.cart.destroy', ['id' => $cart->id]) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger btn-sm"
@@ -87,7 +87,10 @@
                     <span>Total</span><b>{{ $carts->sum('total') }}</b>
                 </p>
                 <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary">Proceed to checkout</button>
+                    <form action="{{ route('user.order.store') }}" method="post">
+                        @csrf
+                        <button class="btn btn-primary">Proceed to checkout</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@
                     <h5 class="card-title">Create Product</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>title</label>

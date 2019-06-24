@@ -17,75 +17,67 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+            @foreach ($orders as $order)
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Product Table</h4>
+                    <h4 class="card-title">Order #{{ $order['bill']->id }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
                                 <tr>
-                                    <th>
+                                    <th width="20%">
+                                        Image
+                                    </th>
+                                    <th width="35%">
                                         Title
                                     </th>
-                                    <th>
-                                        Author
-                                    </th>
-                                    <th>
-                                        Category
-                                    </th>
-                                    <th class="text-right">
+                                    <th width="15%">
                                         Price
                                     </th>
-                                    <th>
-                                        Edit
+                                    <th width="15%">
+                                        Quantity
                                     </th>
-                                    <th>Delete</th>
+                                    <th width="15%">
+                                        Total
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $product)
+                                @foreach ($order['products'] as $product)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('web.product.show', ['id' => $product->id]) }}">
+                                        <img class="img-fluid" width="150px" src="/upload/{{ $product->image }}" alt="">
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('web.product.show',['id' => $product->product_id]) }}">
                                             {{ $product->title }}
                                         </a>
                                     </td>
                                     <td>
-                                        {{ $product->author }}
-                                    </td>
-                                    <td>
-                                        {{ $product->category }}
-                                    </td>
-                                    <td class="text-right">
                                         {{ $product->price }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">Edit</a>
+                                        {{ $product->quantity }}
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.product.destroy', ['id' => $product->id]) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit"
-                                                onclick="return confirm('Would you like to delete it?')"
-                                                style="border: none; cursor: pointer; color: #51cbce;">Delete</button>
-                                        </form>
+                                        {{ $product->total }}
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <div>
+                            <p>Total : {{ $order['bill']->total }}</p>
+                            <p>Buyer : {{ $order['bill']->name }}</p>
+                            <p>Date : {{ $order['bill']->created_at }}</p>
+                            <button class="btn btn-success btn-sm">Confirm</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <a href="{{ route('admin.product.create') }}" class="btn btn-primary">Create</a>
+            @endforeach
         </div>
     </div>
 </div>

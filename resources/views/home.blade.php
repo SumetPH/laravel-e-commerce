@@ -109,7 +109,7 @@
                             <a href=""
                                 onclick="event.preventDefault(); document.getElementById('add-cart-form-{{ $product->id }}').submit();">add
                                 to cart</a>
-                            <form id="add-cart-form-{{ $product->id }}" action="{{ route('cart.store') }}"
+                            <form id="add-cart-form-{{ $product->id }}" action="{{ route('user.cart.store') }}"
                                 method="post">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">

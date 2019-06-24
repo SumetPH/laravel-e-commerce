@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
-use App\Cart;
 use App\Http\Controllers\Controller;
+use App\OrderProduct;
+use DB;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,20 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->get();
-        return view('user.cart.index')->with('carts', $carts);
+        session()->put('admin-page', 'order');
+        $orders = [];
+        $order_bill = DB::table('order_bills')
+            ->join('users', 'users.id', 'order_bills.user_id')
+            ->select('order_bills.*', 'users.name')
+            ->get();
+        foreach ($order_bill as $value) {
+            $order_product = OrderProduct::where('order_bill_id', $value->id)->get();
+            array_push($orders, [
+                'bill' => $value,
+                'products' => $order_product,
+            ]);
+        }
+        return view('admin.order.index')->with('orders', $orders);
     }
 
     /**
@@ -37,19 +50,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $cart = new Cart;
-        $cart->user_id = auth()->user()->id;
-        $cart->product_id = $request->product_id;
-        $cart->title = $request->title;
-        $cart->image = $request->image;
-        $cart->price = $request->price;
-        $cart->quantity = $request->quantity;
-        $cart->total = $request->quantity * $request->price;
-        if ($cart->save()) {
-            return redirect(route('user.cart.index'))->with('success', 'Added');
-        } else {
-            return redirect(route('user.cart.index'))->with('failure', 'Error');
-        }
+        //
     }
 
     /**
@@ -94,11 +95,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        $cart = Cart::find($id);
-        if ($cart->delete()) {
-            return redirect()->back()->with('success', 'Removed');
-        } else {
-            return redirect()->back()->with('failure', 'Error');
-        }
+        //
     }
 }

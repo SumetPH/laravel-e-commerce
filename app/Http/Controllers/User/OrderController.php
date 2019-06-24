@@ -4,9 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Cart;
 use App\Http\Controllers\Controller;
+use App\OrderBill;
+use App\OrderProduct;
 use Illuminate\Http\Request;
 
-class CartController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->get();
-        return view('user.cart.index')->with('carts', $carts);
+        //
     }
 
     /**
@@ -37,19 +38,25 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $cart = new Cart;
-        $cart->user_id = auth()->user()->id;
-        $cart->product_id = $request->product_id;
-        $cart->title = $request->title;
-        $cart->image = $request->image;
-        $cart->price = $request->price;
-        $cart->quantity = $request->quantity;
-        $cart->total = $request->quantity * $request->price;
-        if ($cart->save()) {
-            return redirect(route('user.cart.index'))->with('success', 'Added');
-        } else {
-            return redirect(route('user.cart.index'))->with('failure', 'Error');
+        $carts = Cart::where('user_id', auth()->user()->id)->get();
+        $order_bill = new OrderBill;
+        $order_bill->user_id = auth()->user()->id;
+        $order_bill->total = $carts->sum('total');
+        $order_bill->save();
+        foreach ($carts as $key => $value) {
+            $order_product = new OrderProduct;
+            $order_product->order_bill_id = $order_bill->id;
+            $order_product->product_id = $value->product_id;
+            $order_product->image = $value->image;
+            $order_product->title = $value->title;
+            $order_product->price = $value->price;
+            $order_product->quantity = $value->quantity;
+            $order_product->total = $value->total;
+            if ($order_product->save()) {
+                $value->delete();
+            }
         }
+        return redirect('/');
     }
 
     /**
@@ -94,11 +101,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        $cart = Cart::find($id);
-        if ($cart->delete()) {
-            return redirect()->back()->with('success', 'Removed');
-        } else {
-            return redirect()->back()->with('failure', 'Error');
-        }
+        //
     }
 }

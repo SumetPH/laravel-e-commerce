@@ -141,7 +141,7 @@
                                         <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
                                     </li> --}}
                                     <li class="checkout">
-                                        <a href="{{ route('cart.index') }}">
+                                        <a href="{{ route('user.cart.index') }}">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                             @if (session()->get('cart'))
                                             <span id="checkout_items"

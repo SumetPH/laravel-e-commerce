@@ -49,21 +49,21 @@
                         </a>
                     </li>
                     <li class="{{ session()->get('admin-page') == 'product' ? 'active' : null }}">
-                        <a href="{{ route('product.index') }}">
+                        <a href="{{ route('admin.product.index') }}">
                             <i class="nc-icon nc-diamond"></i>
                             <p>Product</p>
                         </a>
                     </li>
                     <li class="{{ session()->get('admin-page') == 'category' ? 'active' : null }}">
-                        <a href="{{ route('category.index') }}">
+                        <a href="{{ route('admin.category.index') }}">
                             <i class="nc-icon nc-pin-3"></i>
                             <p>Category</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="./notifications.html">
+                    <li class="{{ session()->get('admin-page') == 'order' ? 'active' : null }}">
+                        <a href="{{ route('admin.order.index') }}">
                             <i class="nc-icon nc-bell-55"></i>
-                            <p>Notifications</p>
+                            <p>Order</p>
                         </a>
                     </li>
                     <li>

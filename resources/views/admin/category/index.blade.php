@@ -48,10 +48,10 @@
                                         {{ $category->category }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('category.edit', ['id' => $category->id]) }}">Edit</a>
+                                        <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">Edit</a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('category.destroy', ['id' => $category->id]) }}"
+                                        <form action="{{ route('admin.category.destroy', ['id' => $category->id]) }}"
                                             method="post">
                                             @csrf
                                             @method('delete')
@@ -71,7 +71,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <a href="{{ route('category.create') }}" class="btn btn-primary">Create</a>
+            <a href="{{ route('admin.category.create') }}" class="btn btn-primary">Create</a>
         </div>
     </div>
 </div>
