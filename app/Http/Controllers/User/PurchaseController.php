@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-use App\Category;
 use App\Http\Controllers\Controller;
+use App\PurchaseBill;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        session()->put('admin-page', 'category');
-        $categories = Category::all();
-        return view('admin.category.index')->with('categories', $categories);
+        $purchases = PurchaseBill::where('user_id', auth()->user()->id)->get();
+        return view('user.purchase.index')->with('purchases', $purchases);
     }
 
     /**
@@ -27,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        //
     }
 
     /**
@@ -38,13 +37,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new Category;
-        $category->category = $request->category;
-        if ($category->save()) {
-            return redirect()->route('admin.category.index')->with('success', 'Saved');
-        } else {
-            return redirect()->route('admin.category.index')->with('failure', 'Error');
-        }
+        //
     }
 
     /**
@@ -66,8 +59,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        return view('admin.category.edit')->with('category', $category);
+        //
     }
 
     /**
@@ -79,13 +71,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $category->category = $request->category;
-        if ($category->save()) {
-            return redirect()->route('admin.category.index')->with('success', 'Updated');
-        } else {
-            return redirect()->route('admin.category.index')->with('failure', 'Error');
-        }
+        //
     }
 
     /**
@@ -96,11 +82,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-        if ($category->delete()) {
-            return redirect()->back()->with('success', 'Deleted');
-        } else {
-            return redirect()->back()->with('failure', 'Error');
-        }
+        //
     }
 }

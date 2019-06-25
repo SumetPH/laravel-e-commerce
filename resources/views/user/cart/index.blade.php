@@ -39,21 +39,21 @@
                     @foreach ($carts as $cart)
                     <tr>
                         <td>
-                            <img class="img-fluid" width="150px" src="/upload/{{ $cart->image }}" alt="">
+                            <img class="img-fluid" width="100px" src="/upload/{{ $cart->product->image }}" alt="">
                         </td>
                         <th>
                             <a href="{{ route('web.product.show', ['id' => $cart->product_id]) }}">
-                                {{ $cart->title }}
+                                {{ $cart->product->title }}
                             </a>
                         </th>
                         <th>
-                            {{ $cart->price }}
+                            {{ $cart->product->price }}
                         </th>
                         <th>
                             {{ $cart->quantity }}
                         </th>
                         <th>
-                            {{ $cart->total }}
+                            {{ $cart->product->price * $cart->quantity }}
                         </th>
                         <th>
                             <form action="{{ route('user.cart.destroy', ['id' => $cart->id]) }}" method="post">
@@ -78,19 +78,17 @@
                 <h4 class="card-title">Cart Total</h4>
                 <hr>
                 <p class="d-flex justify-content-between">
-                    <span>Subtotal</span><span>{{ $carts->sum('total') }}</span>
+                    <span>Subtotal</span><span>{{ $total }}</span>
                 </p>
                 <p class="d-flex justify-content-between">
                     <span>Shipping</span><span>Free</span>
                 </p>
                 <p class="d-flex justify-content-between" style="font-size: 20px">
-                    <span>Total</span><b>{{ $carts->sum('total') }}</b>
+                    <span>Total</span><b>{{ $total }}</b>
                 </p>
                 <div class="d-flex justify-content-center">
-                    <form action="{{ route('user.order.store') }}" method="post">
-                        @csrf
-                        <button class="btn btn-primary">Proceed to checkout</button>
-                    </form>
+                    <a href="{{ route('user.checkout',['total' => $total]) }}" class="btn btn-primary">Proceed to
+                        checkout</a>
                 </div>
             </div>
         </div>

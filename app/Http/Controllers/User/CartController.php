@@ -16,7 +16,15 @@ class CartController extends Controller
     public function index()
     {
         $carts = Cart::where('user_id', auth()->user()->id)->get();
-        return view('user.cart.index')->with('carts', $carts);
+        $total = 0;
+        foreach ($carts as $cart) {
+           $total += $cart->product->price * $cart->quantity;
+        }
+
+        return view('user.cart.index')->with([
+            'carts' => $carts,
+            'total' => $total,
+        ]);
     }
 
     /**
@@ -40,11 +48,7 @@ class CartController extends Controller
         $cart = new Cart;
         $cart->user_id = auth()->user()->id;
         $cart->product_id = $request->product_id;
-        $cart->title = $request->title;
-        $cart->image = $request->image;
-        $cart->price = $request->price;
         $cart->quantity = $request->quantity;
-        $cart->total = $request->quantity * $request->price;
         if ($cart->save()) {
             return redirect(route('user.cart.index'))->with('success', 'Added');
         } else {

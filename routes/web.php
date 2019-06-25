@@ -27,9 +27,12 @@ Route::group(['middleware' => ['cart.check']], function () {
 Route::group(['middleware' => ['auth', 'cart.check']], function () {
     Route::get('/user/dashboard', 'User\UserController@index')
         ->name('user.dashboard');
+    Route::get('/user/checkout', 'User\UserController@checkout')
+        ->name('user.checkout');
 
     Route::resource('/user/cart', 'User\CartController', ['as' => 'user']);
     Route::resource('/user/order', 'User\OrderController', ['as' => 'user']);
+    Route::resource('/user/purchase', 'User\PurchaseController', ['as' => 'user']);
 });
 
 // Admin

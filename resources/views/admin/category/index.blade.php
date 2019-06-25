@@ -57,7 +57,7 @@
                                             @method('delete')
                                             <button type="submit"
                                                 onclick="return confirm('Would you like to delete it?')"
-                                                style="border: none; cursor: pointer; color: #51cbce;">Delete</button>
+                                                class="btn btn-danger btn-sm">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

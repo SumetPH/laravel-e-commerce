@@ -1,7 +1,12 @@
-@extends('layouts.admin')
+@extends('layouts.web')
+
+@section('link')
+<link rel="stylesheet" type="text/css" href="/assets/frontEnd/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="/assets/frontEnd/styles/responsive.css">
+@endsection
 
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 200px">
     <div class="row">
         <div class="col-lg-12">
             @if (session()->exists('success'))
@@ -17,10 +22,10 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            @foreach ($orders as $order)
-            <div class="card">
+            @foreach ($purchases as $purchase)
+            <div class="card mb-4">
                 <div class="card-header">
-                    <h4 class="card-title">Order #{{ $order->id }}</h4>
+                    <h4 class="card-title">Order #{{ $purchase->id }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -45,7 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($order->products as $product)
+                                @foreach ($purchase->products as $product)
                                 <tr>
                                     <td>
                                         <img class="img-fluid" width="100px" src="/upload/{{ $product->image }}" alt="">
@@ -69,15 +74,9 @@
                             </tbody>
                         </table>
                         <div>
-                            <p>Total : {{ $order->total }}</p>
-                            <p>Buyer : {{ $order->user->name }}</p>
-                            <p>Date : {{ $order->created_at }}</p>
-                            @if($order->payment_completed)
-                            <a class=" btn btn-primary btn-sm" href="/upload/{{ $order->transfer_slip }}"
-                                target="_blank">Transfer slip</a>
-                            @endif
-                            <a class=" btn btn-success btn-sm" onclick="return confirm('Wolud you link to confirm it?')"
-                                href="{{ route('admin.payment_confirm', ['id' => $order->id]) }}">Confirm</a>
+                            <p>Total : {{ $purchase->total }}</p>
+                            <p>Buyer : {{ $purchase->user->name }}</p>
+                            <p>Date : {{ $purchase->created_at }}</p>
                         </div>
                     </div>
                 </div>

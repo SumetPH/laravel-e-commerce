@@ -21,17 +21,17 @@ class AdminController extends Controller
         $purchase_bill = new PurchaseBill;
         $purchase_bill->user_id = $order->user_id;
         $purchase_bill->total = $order->total;
+        $purchase_bill->transfer_slip = $order->transfer_slip;
         $purchase_bill->save();
 
         foreach ($order->products as $product) {
             $purchase_product = new PurchaseProduct;
             $purchase_product->purchase_bill_id = $purchase_bill->id;
             $purchase_product->product_id = $product->product_id;
+            $purchase_product->quantity = $product->quantity;
             $purchase_product->image = $product->image;
             $purchase_product->title = $product->title;
             $purchase_product->price = $product->price;
-            $purchase_product->quantity = $product->quantity;
-            $purchase_product->total = $product->total;
             if ($purchase_product->save()) {
                 $product->delete();
             }

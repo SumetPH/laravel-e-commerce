@@ -18,6 +18,7 @@ class CreateOrderBillsTable extends Migration
             $table->integer('user_id');
             $table->integer('total');
             $table->boolean('payment_completed')->default(0);
+            $table->text('transfer_slip')->nullable();
             $table->timestamps();
         });
     }

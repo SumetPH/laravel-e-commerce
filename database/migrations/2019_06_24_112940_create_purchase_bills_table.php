@@ -17,6 +17,7 @@ class CreatePurchaseBillsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('total');
+            $table->text('transfer_slip')->nullable();
             $table->timestamps();
         });
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Cart;
 use App\Http\Controllers\Controller;
 use App\OrderBill;
 use App\OrderProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -17,7 +17,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = OrderBill::where('user_id', auth()->user()->id)->get();
+        return view('user.order.index')->with('orders', $orders);
     }
 
     /**
@@ -38,25 +39,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->get();
-        $order_bill = new OrderBill;
-        $order_bill->user_id = auth()->user()->id;
-        $order_bill->total = $carts->sum('total');
-        $order_bill->save();
-        foreach ($carts as $key => $value) {
-            $order_product = new OrderProduct;
-            $order_product->order_bill_id = $order_bill->id;
-            $order_product->product_id = $value->product_id;
-            $order_product->image = $value->image;
-            $order_product->title = $value->title;
-            $order_product->price = $value->price;
-            $order_product->quantity = $value->quantity;
-            $order_product->total = $value->total;
-            if ($order_product->save()) {
-                $value->delete();
-            }
-        }
-        return redirect('/');
+
     }
 
     /**
@@ -90,7 +73,15 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transfer_slip = Storage::putFile('transfer_slip', $request->file('transfer_slip'));
+        $order_bill = OrderBill::find($id);
+        $order_bill->transfer_slip = $transfer_slip;
+        $order_bill->payment_completed = true;
+        if ($order_bill->save()) {
+            return redirect()->back()->with('success', 'Saved');
+        } else {
+            return redirect()->back()->with('failure', 'Error');
+        }
     }
 
     /**
@@ -101,6 +92,10 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (OrderBill::find($id)->delete() && OrderProduct::where('order_bill_id', $id)->delete()) {
+            return redirect()->back()->with('success', 'Canceled');
+        } else {
+            return redirect()->back()->with('failure', 'Error');
+        }
     }
 }

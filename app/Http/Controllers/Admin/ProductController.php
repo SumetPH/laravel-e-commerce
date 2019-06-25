@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
+use Illuminate\Http\Request;
 use Storage;
 
 class ProductController extends Controller
@@ -52,9 +53,9 @@ class ProductController extends Controller
         $product->file = $file;
         $product->price = $request->price;
         if ($product->save()) {
-            return redirect()->back()->with('success', 'Saved');
+            return redirect()->route('admin.product.index')->with('success', 'Saved');
         } else {
-            return redirect()->back()->with('failure', 'Error');
+            return redirect()->route('admin.product.index')->with('failure', 'Error');
         }
     }
 
@@ -97,13 +98,11 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if ($request->hasFile('image')) {
-            Storage::delete($product->image);
             $image = Storage::putFile('image', $request->file('image'));
             $product->image = $image;
             $product->save();
         }
         if ($request->hasFile('file')) {
-            Storage::delete($product->file);
             $file = Storage::putFile('file', $request->file('file'));
             $product->file = $file;
             $product->save();
@@ -115,9 +114,9 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->price = $request->price;
         if ($product->save()) {
-            return redirect()->back()->with('success', 'Updated');
+            return redirect()->route('admin.product.index')->with('success', 'Updated');
         } else {
-            return redirect()->back()->with('failure', 'Error');
+            return redirect()->route('admin.product.index')->with('failure', 'Error');
         }
     }
 
@@ -131,8 +130,6 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if ($product->delete()) {
-            Storage::delete($product->image);
-            Storage::delete($product->file);
             return redirect()->back()->with('success', 'Deleted');
         } else {
             return redirect()->back()->with('failure', 'Error');

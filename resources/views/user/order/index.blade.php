@@ -1,7 +1,12 @@
-@extends('layouts.admin')
+@extends('layouts.web')
+
+@section('link')
+<link rel="stylesheet" type="text/css" href="/assets/frontEnd/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="/assets/frontEnd/styles/responsive.css">
+@endsection
 
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 200px">
     <div class="row">
         <div class="col-lg-12">
             @if (session()->exists('success'))
@@ -18,7 +23,7 @@
     <div class="row">
         <div class="col-lg-12">
             @foreach ($orders as $order)
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-header">
                     <h4 class="card-title">Order #{{ $order->id }}</h4>
                 </div>
@@ -72,12 +77,33 @@
                             <p>Total : {{ $order->total }}</p>
                             <p>Buyer : {{ $order->user->name }}</p>
                             <p>Date : {{ $order->created_at }}</p>
-                            @if($order->payment_completed)
-                            <a class=" btn btn-primary btn-sm" href="/upload/{{ $order->transfer_slip }}"
-                                target="_blank">Transfer slip</a>
+                            <hr>
+                            <h5>Payment confirm</h5>
+                            @if ($order->payment_completed)
+                            <a class="btn btn-success btn-sm" href="/upload/{{ $order->transfer_slip }}"
+                                target="_blank">
+                                Transfer Slip
+                            </a>
+                            @else
+                            <form action="{{ route('user.order.update', ['id' => $order->id]) }}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
+                                <div class="form-group">
+                                    <label>Bill</label> :
+                                    <input type="file" name="transfer_slip" required>
+                                </div>
+                                <button class="btn btn-success btn-sm" type="submit">Send</button>
+                            </form>
                             @endif
-                            <a class=" btn btn-success btn-sm" onclick="return confirm('Wolud you link to confirm it?')"
-                                href="{{ route('admin.payment_confirm', ['id' => $order->id]) }}">Confirm</a>
+                            <hr>
+                            <h5>Cancel Order</h5>
+                            <form action="{{ route('user.order.destroy', ['id' => $order->id]) }}" method="post"
+                                onsubmit="return confirm('Would you link to cancel order?')">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-warning btn-sm" type="submit">Cancel</button>
+                            </form>
                         </div>
                     </div>
                 </div>

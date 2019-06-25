@@ -123,12 +123,12 @@
                                     <li class="dropdown">
                                         <a href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            Dropdown
+                                            Account
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="{{ route('user.order.index') }}">Order</a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('user.purchase.index') }}">Purchased</a>
                                         </div>
                                     </li>
                                     <li><a href="contact.html">contact</a></li>
