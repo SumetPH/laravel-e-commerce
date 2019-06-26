@@ -87,41 +87,44 @@
                     @foreach ($products as $product)
                     <div class="product-item">
                         <div class="product discount product_filter">
-                            <div class="product_image">
-                                <img src="/upload/{{ $product->image }}" alt="">
+                            <div>
+                                <img class="center-cropped" src="/upload/{{ $product->image }}" alt="">
                             </div>
-                            {{-- <div class="favorite favorite_left"></div> --}}
-                            {{-- <div
+                            {{-- <div class="product_image">
+                                <img src="/upload/{{ $product->image }}" alt="">
+                        </div> --}}
+                        {{-- <div class="favorite favorite_left"></div> --}}
+                        {{-- <div
                                 class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
                                 <span>-$20</span></div> --}}
-                            <div class="product_info">
-                                <h6 class="product_name">
-                                    <a
-                                        href="{{ route('web.product.show', ['id' => $product->id]) }}">{{ $product->title }}</a>
-                                </h6>
-                                <div class=" product_price">
-                                    {{ $product->price }} THB.
-                                    {{-- <span>$590.00</span> --}}
-                                </div>
+                        <div class="product_info">
+                            <h6 class="product_name">
+                                <a
+                                    href="{{ route('web.product.show', ['id' => $product->id]) }}">{{ $product->title }}</a>
+                            </h6>
+                            <div class=" product_price">
+                                {{ $product->price }} THB.
+                                {{-- <span>$590.00</span> --}}
                             </div>
                         </div>
-                        <div class="red_button add_to_cart_button">
-                            <a href=""
-                                onclick="event.preventDefault(); document.getElementById('add-cart-form-{{ $product->id }}').submit();">add
-                                to cart</a>
-                            <form id="add-cart-form-{{ $product->id }}" action="{{ route('user.cart.store') }}"
-                                method="post">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="quantity" value="1">
-                            </form>
-                        </div>
                     </div>
-                    @endforeach
+                    <div class="red_button add_to_cart_button">
+                        <a href=""
+                            onclick="event.preventDefault(); document.getElementById('add-cart-form-{{ $product->id }}').submit();">add
+                            to cart</a>
+                        <form id="add-cart-form-{{ $product->id }}" action="{{ route('user.cart.store') }}"
+                            method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
+                        </form>
+                    </div>
+                </div>
+                @endforeach
 
-                    <!-- Product 2 -->
+                <!-- Product 2 -->
 
-                    {{-- <div class="product-item women">
+                {{-- <div class="product-item women">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_2.png" alt="">
@@ -139,9 +142,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 3 -->
+                <!-- Product 3 -->
 
-                    {{-- <div class="product-item women">
+                {{-- <div class="product-item women">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_3.png" alt="">
@@ -156,9 +159,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 4 -->
+                <!-- Product 4 -->
 
-                    {{-- <div class="product-item accessories">
+                {{-- <div class="product-item accessories">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_4.png" alt="">
@@ -176,9 +179,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 5 -->
+                <!-- Product 5 -->
 
-                    {{-- <div class="product-item women men">
+                {{-- <div class="product-item women men">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_5.png" alt="">
@@ -193,9 +196,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 6 -->
+                <!-- Product 6 -->
 
-                    {{-- <div class="product-item accessories">
+                {{-- <div class="product-item accessories">
                         <div class="product discount product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_6.png" alt="">
@@ -213,9 +216,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 7 -->
+                <!-- Product 7 -->
 
-                    {{-- <div class="product-item women">
+                {{-- <div class="product-item women">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_7.png" alt="">
@@ -230,9 +233,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 8 -->
+                <!-- Product 8 -->
 
-                    {{-- <div class="product-item accessories">
+                {{-- <div class="product-item accessories">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_8.png" alt="">
@@ -247,9 +250,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 9 -->
+                <!-- Product 9 -->
 
-                    {{-- <div class="product-item men">
+                {{-- <div class="product-item men">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_9.png" alt="">
@@ -267,9 +270,9 @@
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
 
-                    <!-- Product 10 -->
+                <!-- Product 10 -->
 
-                    {{-- <div class="product-item men">
+                {{-- <div class="product-item men">
                         <div class="product product_filter">
                             <div class="product_image">
                                 <img src="/assets/frontEnd/images/product_10.png" alt="">
@@ -283,10 +286,10 @@
                         </div>
                         <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
                     </div> --}}
-                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Deal of the week -->
